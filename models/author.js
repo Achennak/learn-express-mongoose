@@ -12,6 +12,7 @@ var AuthorSchema = new Schema(
 );
 
 // Virtual for author's full name
+//encapsulation property
 AuthorSchema
 .virtual('name')
 .get(function () {
@@ -28,7 +29,19 @@ AuthorSchema
 });
 
 // Virtual for author's lifespan
-AuthorSchema.virtual('lifespan').get(function() {});
+//node models/author.js --to test
+AuthorSchema.virtual('lifespan').get(function() {
+
+  var res =' ';
+  if(this.date_of_birth){
+    res = this.date_of_birth.getYear().toString() +" - ";
+  }
+  if(this.date_of_death){
+    res=res+this.date_of_death.getYear();
+  }
+  return res;
+
+});
 
 //Export model
 module.exports = mongoose.model('Author', AuthorSchema);
